@@ -30,7 +30,7 @@ def DefaultTarget():
 #######################################################
 options = Variables()
 options.AddVariables(
-    EnumVariable('target', 'build target', 'mips-openwrt-linux', allowed_values=['mips-openwrt-linux']),
+    EnumVariable('target', 'build target', 'arm-openwrt-linux-muslgnueabi', allowed_values=['arm-openwrt-linux-muslgnueabi']),
     BoolVariable('stop_on_warning', 'Stop the build on warnings', False),
     ListVariable('build_config', 'build configurations', 'Release', names=['Debug', 'Release'])
 )
