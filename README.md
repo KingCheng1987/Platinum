@@ -1,2 +1,1 @@
-# Platinum
-This is the first commit
+platinum mips-openwrt-linux

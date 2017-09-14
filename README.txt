@@ -1,1 +1,0 @@
-platinum mips-openwrt-linux
