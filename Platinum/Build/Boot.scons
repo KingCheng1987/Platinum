@@ -30,9 +30,9 @@ def DefaultTarget():
 #######################################################
 options = Variables()
 options.AddVariables(
-    EnumVariable('target', 'build target', DefaultTarget(), allowed_values=PLATFORM_TO_TARGET_MAP.values()+CROSS_PLATFORMS+SPECIAL_PLATFORMS),
+    EnumVariable('target', 'build target', 'mips-openwrt-linux', allowed_values=['mips-openwrt-linux']),
     BoolVariable('stop_on_warning', 'Stop the build on warnings', False),
-    ListVariable('build_config', 'build configurations', 'Debug', names=['Debug', 'Release'])
+    ListVariable('build_config', 'build configurations', 'Release', names=['Debug', 'Release'])
 )
 
 env = Environment(variables=options)

@@ -195,11 +195,15 @@ NPT_SOURCE_ROOT = '../Neptune'
 
 LibraryModule(name                  = 'Zlib',
               source_root           = NPT_SOURCE_ROOT,
-              build_source_dirs     = ['ThirdParty/zlib-1.2.3'])
+              build_source_dirs     = ['ThirdParty/zlib-1.2.3'],
+              shared                = True,
+              install               = True)
               
 LibraryModule(name                  = 'axTLS',
               source_root           = NPT_SOURCE_ROOT,
-              build_source_dirs     = ['ThirdParty/axTLS/crypto', 'ThirdParty/axTLS/ssl', 'ThirdParty/axTLS/config/Generic'])
+              build_source_dirs     = ['ThirdParty/axTLS/crypto', 'ThirdParty/axTLS/ssl', 'ThirdParty/axTLS/config/Generic'],
+              shared                = True,
+              install               = True)
               
 extra_cpp_flags = []
 if not env.has_key('NPT_CONFIG_NO_ZIP'):
@@ -218,32 +222,42 @@ LibraryModule(name                  = 'Neptune',
               build_source_files    = env['NPT_SYSTEM_SOURCES'],
               extra_cpp_defines     = extra_cpp_flags,
               linked_modules        = env['NPT_EXTRA_LIBS']+['Zlib']+['axTLS'],
-              source_root           = NPT_SOURCE_ROOT + '/Source')
+              source_root           = NPT_SOURCE_ROOT + '/Source',
+              shared                = True,
+              install               = True)
                  
 # Platinum        
 LibraryModule(name               = 'Platinum',
               build_source_dirs  = ['Core', 'Extras'],
               build_include_dirs = ['Source/Platinum'],
-              included_modules   = ['Neptune'])
+              included_modules   = ['Neptune'],
+              shared             = True,
+              install            = True)
 
 # Platinum MediaServer         
 LibraryModule(name               = 'PltMediaServer',
               build_source_dirs  = ['MediaServer'],
               included_modules   = ['Platinum'],
-              source_root        = 'Source/Devices')
+              source_root        = 'Source/Devices',
+              shared             = True,
+              install            = True)
 
 # Platinum MediaRenderer         
 LibraryModule(name               = 'PltMediaRenderer',
               build_source_dirs  = ['MediaRenderer'],
               included_modules   = ['Platinum', 'PltMediaServer'],
-              source_root        = 'Source/Devices')
+              source_root        = 'Source/Devices',
+              shared             = True,
+              install            = True)
                  
 # Platinum MediaConnect         
 LibraryModule(name               = 'PltMediaConnect',
               build_source_dirs  = ['MediaConnect'],
               included_modules   = ['Platinum', 'PltMediaServer', 'PltMediaRenderer'],
               excluded_files	 = ['MACFromIP.cpp'],
-              source_root        = 'Source/Devices')
+              source_root        = 'Source/Devices',
+              shared             = True,
+              install            = True)
                                            
 for app in ['MicroMediaController', 'MediaCrawler', 'MediaConnect', 'FrameStreamer']:
     Application(name    = app, 
