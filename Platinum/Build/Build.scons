@@ -48,6 +48,7 @@ def GetLibraries(modules):
             libs += Modules[module].GetLibraries()
         else:
             libs += [module]
+	
     return libs
 
 Modules = {}
@@ -119,6 +120,9 @@ class LibraryModule(Module):
         else:
             libs = GetLibraries(Split(linked_modules))
             self.product = self.env.SharedLibrary(target=name, LIBS=libs, source=sources)
+            print '+++++++\r\n'
+            print libs
+            print '+++++++\r\n'
         self.env.Alias(name, self.product)
             
         # copy to Targets folder
