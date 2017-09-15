@@ -132,6 +132,10 @@ class LibraryModule(Module):
                 env.AddPostAction(inst, env['STRIP']+' $TARGETS');
         
 def Application(name, dir, deps, install = False):
+    print '++++++++++++'
+    print  name
+    print '++++++++++++'
+	
     DeclareBuildDir(dir)
     libs = GetLibraries(deps)
     cpp_path = GetIncludeDirs(deps)
