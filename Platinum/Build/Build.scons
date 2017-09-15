@@ -48,7 +48,8 @@ def GetLibraries(modules):
             libs += Modules[module].GetLibraries()
         else:
             libs += [module]
-	
+    print 'GetLibraries'	
+    print libs
     return libs
 
 Modules = {}
@@ -78,6 +79,7 @@ class LibraryModule(Module):
                  environment           = None,
                  excluded_files        = [],
                  extra_cpp_defines     = [],
+				 lib_path               = [],
                  shared                = False,
                  install               = False) :
         build_source_dirs = [source_root+'/'+drct for drct in build_source_dirs]
@@ -119,10 +121,8 @@ class LibraryModule(Module):
             self.product = self.env.Library(target=name, source=sources)
         else:
             libs = GetLibraries(Split(linked_modules))
-            self.product = self.env.SharedLibrary(target=name, LIBS=libs, source=sources)
-            print '+++++++\r\n'
-            print libs
-            print '+++++++\r\n'
+            print '++++last lib is ',libs
+            self.product = self.env.SharedLibrary(target=name, LIBS=libs, LIBPATH =lib_path, source=sources)
         self.env.Alias(name, self.product)
             
         # copy to Targets folder
@@ -132,10 +132,7 @@ class LibraryModule(Module):
                 env.AddPostAction(inst, env['STRIP']+' $TARGETS');
         
 def Application(name, dir, deps, install = False):
-    print '++++++++++++'
     print  name
-    print '++++++++++++'
-	
     DeclareBuildDir(dir)
     libs = GetLibraries(deps)
     cpp_path = GetIncludeDirs(deps)
@@ -229,7 +226,7 @@ LibraryModule(name                  = 'Neptune',
               build_source_dirs     = ['Core']+tls_data_dirs,
               build_source_files    = env['NPT_SYSTEM_SOURCES'],
               extra_cpp_defines     = extra_cpp_flags,
-              linked_modules        = env['NPT_EXTRA_LIBS']+['Zlib']+['axTLS'],
+              included_modules      = env['NPT_EXTRA_LIBS']+['Zlib']+['axTLS'],
               source_root           = NPT_SOURCE_ROOT + '/Source',
               shared                = True,
               install               = True)
